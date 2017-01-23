@@ -70,17 +70,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //Anhadimops un marcador definiendo las coordenadas de la ciudad de vigo,ademas se pe ha puesto un titulo
 
-        /*LatLng vigo = new LatLng(42.2328200, -8.7226400);
+        LatLng vigo = new LatLng(42.2328200, -8.7226400);
         googleMap.addMarker(new MarkerOptions()
                 .position(vigo)
+                .visible(false)
                 .title("Vigo,A cidade Olivica"));
+
 
         CameraPosition cameraPosition = CameraPosition.builder()
                 .target(vigo)
                 .zoom(10)
                 .build();
 
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));*/
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
     }
 
