@@ -70,7 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Anhadimops un marcador definiendo las coordenadas de la ciudad de vigo,ademas se pe ha puesto un titulo
 
-        LatLng telepizza = new LatLng(42.2328200, -8.7226400);
+        LatLng telepizza = new LatLng(42.236948, -8.712725);
         googleMap.addMarker(new MarkerOptions()
                 .position(telepizza)
                 .visible(true)
@@ -78,27 +78,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         );
 
-        LatLng abanca = new LatLng(42.2328200, -8.7226400);
+        LatLng abanca = new LatLng(42.237782, -8.720155);
         googleMap.addMarker(new MarkerOptions()
                 .position(abanca)
                 .visible(true)
-                .title("Telepizza")
+                .title("Abanca")
 
         );
 
-        LatLng casadolibro = new LatLng(42.2328200, -8.7226400);
+        LatLng casadolibro = new LatLng(42.236857, -8.721821);
         googleMap.addMarker(new MarkerOptions()
                 .position(casadolibro)
                 .visible(true)
-                .title("Telepizza")
+                .title("Casa do Libro")
 
         );
 
-        LatLng fiveMonkeys = new LatLng(42.2328200, -8.7226400);
+        LatLng fiveMonkeys = new LatLng(42.23806, -8.724938);
         googleMap.addMarker(new MarkerOptions()
                 .position(fiveMonkeys)
                 .visible(true)
-                .title("Telepizza")
+                .title("Five Monkeys Cafe")
 
         );
 
@@ -106,7 +106,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         googleMap.addMarker(new MarkerOptions()
                 .position(vigo)
                 .visible(true)
-                .title("Telepizza")
+                .title("idade de Vigo")
 
         );
 
