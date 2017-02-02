@@ -19,7 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import layout.FirstMapFragment;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int LOCATION_REQUEST_CODE = 1;
     private GoogleMap mMap;
@@ -70,11 +70,45 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //Anhadimops un marcador definiendo las coordenadas de la ciudad de vigo,ademas se pe ha puesto un titulo
 
+        LatLng telepizza = new LatLng(42.2328200, -8.7226400);
+        googleMap.addMarker(new MarkerOptions()
+                .position(telepizza)
+                .visible(true)
+                .title("Telepizza")
+
+        );
+
+        LatLng abanca = new LatLng(42.2328200, -8.7226400);
+        googleMap.addMarker(new MarkerOptions()
+                .position(abanca)
+                .visible(true)
+                .title("Telepizza")
+
+        );
+
+        LatLng casadolibro = new LatLng(42.2328200, -8.7226400);
+        googleMap.addMarker(new MarkerOptions()
+                .position(casadolibro)
+                .visible(true)
+                .title("Telepizza")
+
+        );
+
+        LatLng fiveMonkeys = new LatLng(42.2328200, -8.7226400);
+        googleMap.addMarker(new MarkerOptions()
+                .position(fiveMonkeys)
+                .visible(true)
+                .title("Telepizza")
+
+        );
+
         LatLng vigo = new LatLng(42.2328200, -8.7226400);
         googleMap.addMarker(new MarkerOptions()
                 .position(vigo)
-                .visible(false)
-                .title("Vigo,A cidade Olivica"));
+                .visible(true)
+                .title("Telepizza")
+
+        );
 
 
         CameraPosition cameraPosition = CameraPosition.builder()
