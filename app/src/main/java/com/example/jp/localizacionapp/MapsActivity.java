@@ -36,7 +36,8 @@ import java.util.Locale;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener,
-        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,GoogleMap.OnMapLongClickListener  {
+        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,GoogleMap.OnMapLongClickListener {
+
 
     private static final int LOCATION_REQUEST_CODE = 1;
     private GoogleMap mMap;
@@ -274,7 +275,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.e(LOGTAG, "Error grave al conectar con Google Play Services");
     }
 
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+
     }
+}
 
 
 
