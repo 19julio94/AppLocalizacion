@@ -45,11 +45,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static String result="";
     public static String distancia;
     public static double latpos, lngpos;
-    public static double latTele=42.236948;
-    public static double lngTele=-8.712725;
+    public static double latTele=42.237020;
+    public static double lngTele=-8.712628;
     private static final String LOGTAG = "android-localizacion";
     public static Marker marcaTelepizza;
-    LatLng center = new LatLng(42.236954, -8.712717);
+    LatLng telp = new LatLng(42.236954, -8.712717);
+    LatLng abn = new LatLng(42.237667, -8.720249);
     int radius = 100;
     public static double latAbn=42.237782;
     public static double lngAbn=-8.720155;
@@ -108,15 +109,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        CircleOptions circleOptions = new CircleOptions()
-                .center(center)
+        CircleOptions circuloTelepizza = new CircleOptions()
+                .center(telp)
                 .radius(radius)
                 .strokeColor(Color.parseColor("#0D47A1"))
                 .strokeWidth(4)
                 .fillColor(Color.argb(32, 33, 150, 243));
-        // Añadir círculo
-        Circle circle = mMap.addCircle(circleOptions);
+        // Añadir círculo Telepizza
+        Circle areaTelepizza = mMap.addCircle(circuloTelepizza);
 
+        CircleOptions circuloAbanca = new CircleOptions()
+                .center(telp)
+                .radius(radius)
+                .strokeColor(Color.parseColor("#0D47A1"))
+                .strokeWidth(4)
+                .fillColor(Color.argb(32, 33, 150, 243));
+        // Añadir círculo Telepizza
+        Circle areaAbanca = mMap.addCircle(circuloAbanca);
 
 
         //Anhadimops un marcador definiendo las coordenadas de la ciudad de vigo,ademas se pe ha puesto un titulo
