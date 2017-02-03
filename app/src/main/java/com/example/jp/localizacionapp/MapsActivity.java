@@ -191,11 +191,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         calcularDistancia();
 
         if(result.equals("SiguientePista")){
-            LatLng tesoro2 = new LatLng(latAbn, lngAbn);
+            LatLng pista2 = new LatLng(latAbn, lngAbn);
             latTele=latAbn;
             lngTele=lngAbn;
             marcaTelepizza.remove();
-            marcaTelepizza=mMap.addMarker(new MarkerOptions().position(tesoro2).title("Tesoro2").snippet("Marca Tesoro2").visible(false));
+            marcaTelepizza=mMap.addMarker(new MarkerOptions().position(pista2).title("Abanca").snippet("Marca Abanca").visible(false));
 
         }
 
@@ -207,9 +207,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
     public void calcularDistancia() {
-        /*String la= String.valueOf(lat1);
-        String lo =String.valueOf(lng1);
-        Toast.makeText(this, la+" "+lo, Toast.LENGTH_LONG).show();*/
+
 
         double earthRadius = 6372.795477598;
 
