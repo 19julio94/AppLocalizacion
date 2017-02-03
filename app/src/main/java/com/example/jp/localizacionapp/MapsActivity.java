@@ -47,13 +47,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static double latpos, lngpos;
     public static double latTele=42.237020;
     public static double lngTele=-8.712628;
+    public static double latAbn=42.237782;
+    public static double lngAbn=-8.720155;
     private static final String LOGTAG = "android-localizacion";
     public static Marker marcaTelepizza;
     LatLng telp = new LatLng(42.236954, -8.712717);
     LatLng abn = new LatLng(42.237667, -8.720249);
     int radius = 100;
-    public static double latAbn=42.237782;
-    public static double lngAbn=-8.720155;
+
+
 
 
     @Override
@@ -70,8 +72,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         apiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this,this)
                 .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
     }
@@ -119,12 +121,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Circle areaTelepizza = mMap.addCircle(circuloTelepizza);
 
         CircleOptions circuloAbanca = new CircleOptions()
-                .center(telp)
+                .center(abn)
                 .radius(radius)
                 .strokeColor(Color.parseColor("#0D47A1"))
                 .strokeWidth(4)
                 .fillColor(Color.argb(32, 33, 150, 243));
-        // Añadir círculo Telepizza
+        // Añadir círculo Abanca
         Circle areaAbanca = mMap.addCircle(circuloAbanca);
 
 
@@ -132,7 +134,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-        LatLng vigo = new LatLng(42.2328200, -8.7226400);
+       /* LatLng vigo = new LatLng(42.2328200, -8.7226400);
         googleMap.addMarker(new MarkerOptions()
                 .position(vigo)
                 .visible(true)
@@ -146,16 +148,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .zoom(10)
                 .build();
 
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));*/
 
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         if (requestCode == LOCATION_REQUEST_CODE) {
-            // ¿Permisos asignados?
+
             if (permissions.length > 0 &&
-                    permissions[0].equals(android.Manifest.permission.ACCESS_FINE_LOCATION) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    permissions[0].equals(android.Manifest.permission.ACCESS_FINE_LOCATION) &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
@@ -209,7 +213,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void calcularDistancia() {
 
 
-        double earthRadius = 6372.795477598;
+        double earthRadius = 6378.137;
 
         double dLat = Math.toRadians(latpos-latTele);
         double dLng = Math.toRadians(lngpos-lngTele);
@@ -225,6 +229,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(distMet<=20){
             marcaTelepizza.setVisible(true);
+
         }else {
             marcaTelepizza.setVisible(false);
         }
