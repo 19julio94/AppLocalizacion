@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -307,6 +308,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Log.e(LOGTAG, "Error grave al conectar con Google Play Services");
     }
+
+    public void instrucciones() {
+
+        AlertDialog.Builder build = new AlertDialog.Builder(this);
+        build.setTitle("Busca la marca");
+        build.setMessage(instrucciones);
+        build.setPositiveButton("Aceptar", null);
+        build.create();
+        build.show();
+    }
+
+    public String instrucciones = "Bienvenido,estas listo para buscar la marca escondida??\n" +
+            ".- Activa tu localizacion.\n" +
+            ".- Para que no sea tan dificil,hemos limitado el area en un circulo,tu mision? Encontrar la marca y escanear el codigo QR.\n" +
+            ".- Pulsando una vez en la pantalla se mostrará la distancia hasta la marca.\n" +
+            ".- Cuando estes a menos de 20 metros aparecerá un circulo menor que mostrará el area concreto de la marca.\n" +
+            "Buena suerte suerte.";
 
     @Override
     public void onMapLongClick(LatLng latLng) {
