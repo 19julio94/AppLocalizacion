@@ -53,6 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     int radius = 100;
     public static double latAbn=42.237782;
     public static double lngAbn=-8.720155;
+    CircleOptions circle;
 
 
     @Override
@@ -216,13 +217,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-        if(distMet<=20){
-            marcaTelepizza.setVisible(true);
-        }else {
+        if (distMet >= 150.00) {
+            circle.strokeColor(Color.parseColor("#DF0C0C"));
             marcaTelepizza.setVisible(false);
         }
+        if (distMet >= 100.00 && distMet < 150.00) {
+            circle.strokeColor(Color.parseColor("#F0973F"));
+        }
+        if (distMet < 70.00 && distMet > 50.00) {
+            circle.strokeColor(Color.parseColor("#F4F41E"));
 
+        }
+        if (distMet < 50.00 && distMet > 20.00) {
+            circle.strokeColor(Color.parseColor("#3BFA21"));
+        }
+        if (distMet <= 20.00) {
+            marcaTelepizza.setVisible(true);
+        }
 
+        Toast.makeText(this, "Quedan "+distancia+"metros hasta la marca", Toast.LENGTH_SHORT).show();
 
     }
     private void updateUI(Location loc) {
