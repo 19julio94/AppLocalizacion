@@ -45,15 +45,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static String result="";
     public static String distancia;
     public static double latpos, lngpos;
-    public static double latTele=42.236948;
-    public static double lngTele=-8.712725;
+    public static double latTele=42.237020;
+    public static double lngTele=-8.712628;
+    CircleOptions circle;
     private static final String LOGTAG = "android-localizacion";
     public static Marker marcaTelepizza;
-    LatLng center = new LatLng(42.236954, -8.712717);
+    LatLng telp = new LatLng(42.236954, -8.712717);
+    LatLng abn = new LatLng(42.237667, -8.720249);
     int radius = 100;
+
     public static double latAbn=42.237782;
     public static double lngAbn=-8.720155;
-    CircleOptions circle;
+
+
+
+
 
 
     @Override
@@ -70,8 +76,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         apiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this,this)
                 .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
     }
@@ -109,22 +115,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        CircleOptions circleOptions = new CircleOptions()
-                .center(center)
+        CircleOptions circuloTelepizza = new CircleOptions()
+                .center(telp)
                 .radius(radius)
                 .strokeColor(Color.parseColor("#0D47A1"))
                 .strokeWidth(4)
                 .fillColor(Color.argb(32, 33, 150, 243));
-        // Añadir círculo
-        Circle circle = mMap.addCircle(circleOptions);
+        // Añadir círculo Telepizza
+        Circle areaTelepizza = mMap.addCircle(circuloTelepizza);
 
+        CircleOptions circuloAbanca = new CircleOptions()
+                .center(abn)
+                .radius(radius)
+                .strokeColor(Color.parseColor("#0D47A1"))
+                .strokeWidth(4)
+                .fillColor(Color.argb(32, 33, 150, 243));
+        // Añadir círculo Abanca
+        Circle areaAbanca = mMap.addCircle(circuloAbanca);
 
 
         //Anhadimops un marcador definiendo las coordenadas de la ciudad de vigo,ademas se pe ha puesto un titulo
 
 
 
-        LatLng vigo = new LatLng(42.2328200, -8.7226400);
+       /* LatLng vigo = new LatLng(42.2328200, -8.7226400);
         googleMap.addMarker(new MarkerOptions()
                 .position(vigo)
                 .visible(true)
@@ -138,16 +152,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .zoom(10)
                 .build();
 
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));*/
 
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         if (requestCode == LOCATION_REQUEST_CODE) {
-            // ¿Permisos asignados?
+
             if (permissions.length > 0 &&
-                    permissions[0].equals(android.Manifest.permission.ACCESS_FINE_LOCATION) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    permissions[0].equals(android.Manifest.permission.ACCESS_FINE_LOCATION) &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
@@ -183,11 +199,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         calcularDistancia();
 
         if(result.equals("SiguientePista")){
-            LatLng tesoro2 = new LatLng(latAbn, lngAbn);
+            LatLng pista2 = new LatLng(latAbn, lngAbn);
             latTele=latAbn;
             lngTele=lngAbn;
             marcaTelepizza.remove();
-            marcaTelepizza=mMap.addMarker(new MarkerOptions().position(tesoro2).title("Tesoro2").snippet("Marca Tesoro2").visible(false));
+            marcaTelepizza=mMap.addMarker(new MarkerOptions().position(pista2).title("Abanca").snippet("Marca Abanca").visible(false));
 
         }
 
@@ -199,44 +215,48 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
     public void calcularDistancia() {
-        /*String la= String.valueOf(lat1);
-        String lo =String.valueOf(lng1);
-        Toast.makeText(this, la+" "+lo, Toast.LENGTH_LONG).show();*/
 
-        double earthRadius = 6372.795477598;
 
-        double dLat = Math.toRadians(latpos-latTele);
-        double dLng = Math.toRadians(lngpos-lngTele);
-        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        double earthRadius = 6378.137;
+
+        double dLat = Math.toRadians(latpos - latTele);
+        double dLng = Math.toRadians(lngpos - lngTele);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                 Math.cos(Math.toRadians(latTele)) * Math.cos(Math.toRadians(latpos)) *
-                        Math.sin(dLng/2) * Math.sin(dLng/2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double dist = earthRadius * c;
-        double distMet=dist*1000;
-        distancia=String.valueOf(distMet);
-
+        double distMet = dist * 1000;
+        distancia = String.valueOf(distMet);
 
 
         if (distMet >= 150.00) {
             circle.strokeColor(Color.parseColor("#DF0C0C"));
-            marcaTelepizza.setVisible(false);
-        }
-        if (distMet >= 100.00 && distMet < 150.00) {
-            circle.strokeColor(Color.parseColor("#F0973F"));
-        }
-        if (distMet < 70.00 && distMet > 50.00) {
-            circle.strokeColor(Color.parseColor("#F4F41E"));
+
+            if (distMet <= 20) {
+                marcaTelepizza.setVisible(true);
+
+            } else {
+
+                marcaTelepizza.setVisible(false);
+            }
+            if (distMet >= 100.00 && distMet < 150.00) {
+                circle.strokeColor(Color.parseColor("#F0973F"));
+            }
+            if (distMet < 70.00 && distMet > 50.00) {
+                circle.strokeColor(Color.parseColor("#F4F41E"));
+
+            }
+            if (distMet < 50.00 && distMet > 20.00) {
+                circle.strokeColor(Color.parseColor("#3BFA21"));
+            }
+            if (distMet <= 20.00) {
+                marcaTelepizza.setVisible(true);
+            }
+
+            Toast.makeText(this, "Quedan " + distancia + "metros hasta la marca", Toast.LENGTH_SHORT).show();
 
         }
-        if (distMet < 50.00 && distMet > 20.00) {
-            circle.strokeColor(Color.parseColor("#3BFA21"));
-        }
-        if (distMet <= 20.00) {
-            marcaTelepizza.setVisible(true);
-        }
-
-        Toast.makeText(this, "Quedan "+distancia+"metros hasta la marca", Toast.LENGTH_SHORT).show();
-
     }
     private void updateUI(Location loc) {
 
