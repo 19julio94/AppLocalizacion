@@ -326,7 +326,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ".- Activa tu localizacion.\n" +
             ".- Para que no sea tan dificil,hemos limitado el area en un circulo,tu mision? Encontrar la marca y escanear el codigo QR.\n" +
             ".- Para encontrar la marca,deberas pulsar en la pantalla y se te mostrará la distancia hata esta,cuando estes en el area .\n" +
-            ".- Seleccionada y a menos de 20 metros y toques la pantalla se mostrará la marca,pulsa en ella y manten pulsado 3 segundos .\n" +
+            " seleccionada y a menos de 20 metros y toques la pantalla se mostrará la marca,pulsa en ella y manten pulsado 3 segundos .\n" +
             ".- Y se te abrira un lector QR(En caso de no tenerlo,lo debes instalar) Escanea el codigo y vuelve a la base.\n" +
             "Buena suerte suerte.";
 
