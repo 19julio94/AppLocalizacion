@@ -46,8 +46,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static String result="";
     public static String distancia;
     public static double latpos, lngpos;
-    public static double latTele=42.237020;
-    public static double lngTele=-8.712628;
+    //public static double latTele=42.237020;
+    //public static double lngTele=-8.712628;
+
+    public static double latTele=41.930203;
+    public static double lngTele=-8.795561;
+
+
     CircleOptions circuloTelepizza;
     private static final String LOGTAG = "android-localizacion";
     public static Marker marcaTelepizza;
@@ -320,8 +325,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public String instrucciones = "Bienvenido,estas listo para buscar la marca escondida??\n" +
             ".- Activa tu localizacion.\n" +
             ".- Para que no sea tan dificil,hemos limitado el area en un circulo,tu mision? Encontrar la marca y escanear el codigo QR.\n" +
-            ".- Pulsando una vez en la pantalla se mostrará la distancia hasta la marca.\n" +
-            ".- Cuando estes a menos de 20 metros aparecerá un circulo menor que mostrará el area concreto de la marca.\n" +
+            ".- Para encontrar la marca,deberas pulsar en la pantalla y se te mostrará la distancia hata esta,cuando estes en el area .\n" +
+            ".- Seleccionada y a menos de 20 metros y toques la pantalla se mostrará la marca,pulsa en ella y manten pulsado 3 segundos .\n" +
+            ".- Y se te abrira un lector QR(En caso de no tenerlo,lo debes instalar) Escanea el codigo y vuelve a la base.\n" +
             "Buena suerte suerte.";
 
     @Override
