@@ -39,7 +39,7 @@ import java.util.Locale;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener,
         GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,GoogleMap.OnMapLongClickListener {
 
-
+    public final static int CODE=1;
     private static final int LOCATION_REQUEST_CODE = 1;
     private GoogleMap mMap;
     private GoogleApiClient apiClient;
@@ -48,7 +48,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static double latpos, lngpos;
     public static double latTele=42.237020;
     public static double lngTele=-8.712628;
-    CircleOptions circle;
+    CircleOptions circuloTelepizza;
     private static final String LOGTAG = "android-localizacion";
     public static Marker marcaTelepizza;
     LatLng telp = new LatLng(42.236954, -8.712717);
@@ -86,7 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
+        instrucciones();
         mMap = googleMap;
         mMap.setOnMapClickListener(this);
         mMap.setOnMapLongClickListener(this);
@@ -116,7 +116,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        CircleOptions circuloTelepizza = new CircleOptions()
+         circuloTelepizza = new CircleOptions()
                 .center(telp)
                 .radius(radius)
                 .strokeColor(Color.parseColor("#0D47A1"))
@@ -232,24 +232,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         if (distMet >= 150.00) {
-            circle.strokeColor(Color.parseColor("#DF0C0C"));
+            circuloTelepizza.strokeColor(Color.parseColor("#DF0C0C"));
 
-            if (distMet <= 20) {
-                marcaTelepizza.setVisible(true);
 
             } else {
 
                 marcaTelepizza.setVisible(false);
             }
             if (distMet >= 100.00 && distMet < 150.00) {
-                circle.strokeColor(Color.parseColor("#F0973F"));
+                circuloTelepizza.strokeColor(Color.parseColor("#F0973F"));
             }
             if (distMet < 70.00 && distMet > 50.00) {
-                circle.strokeColor(Color.parseColor("#F4F41E"));
+                circuloTelepizza.strokeColor(Color.parseColor("#F4F41E"));
 
             }
             if (distMet < 50.00 && distMet > 20.00) {
-                circle.strokeColor(Color.parseColor("#3BFA21"));
+                circuloTelepizza.strokeColor(Color.parseColor("#3BFA21"));
             }
             if (distMet <= 20.00) {
                 marcaTelepizza.setVisible(true);
@@ -258,7 +256,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(this, "Quedan " + distancia + "metros hasta la marca", Toast.LENGTH_SHORT).show();
 
         }
-    }
+
     private void updateUI(Location loc) {
 
         if (loc != null) {
@@ -328,7 +326,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-
+        Intent intent = new Intent(MapsActivity.this, Activity_QR.class);
+        startActivityForResult(intent,CODE);
     }
 }
 
