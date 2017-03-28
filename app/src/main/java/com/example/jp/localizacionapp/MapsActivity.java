@@ -49,14 +49,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static float latpos, lngpos;
     public static float latP1 = (float) 42.237020;
     public static float lngP1 = (float) -8.712628;
-
-
-
+    public static float latP2 = (float) 42.23793;
+    public static float lngP2 = (float) -8.712401;
     public static Marker marcaTelepizza;
-    LatLng telp = new LatLng(42.236954, -8.712717);
-    LatLng abn = new LatLng(42.237667, -8.720249);
-    public static double latAbn = 42.237782;
-    public static double lngAbn = -8.720155;
+    public static double latP=42.236323; //latitud del tesoro
+    public static double lngP =-8.712158; //longitud del tesoro
+
     int radius = 100;
     LatLng center = new LatLng(latP1, lngP1);
 
@@ -93,7 +91,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pistaTelepizza));
 
 
-
         // Controles UI
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -121,14 +118,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .fillColor(Color.argb(32, 33, 150, 243));
         // Añadir círculo 1
         circle = mMap.addCircle(circleOptions);
-
-
-
-
-
-
-
-
 
 
     }
@@ -177,9 +166,54 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         calcularDistancia();
 
 
-        Toast.makeText(this, distancia + " metros ", Toast.LENGTH_LONG).show();
-
+        if (result.equals("")) {
+            Toast.makeText(this, distancia + " metros ", Toast.LENGTH_SHORT).show();
+        }
+        if (result.equals("pista")) {
+            double latCi2 = 42.237952;
+            double lngCi2 = -8.712999;
+            circle.setVisible(false);
+            LatLng center = new LatLng(latCi2, lngCi2);
+            int radius = 100;
+            CircleOptions circleOptions = new CircleOptions()
+                    .center(center)
+                    .radius(radius)
+                    .strokeColor(Color.parseColor("#0D47A1"))
+                    .strokeWidth(4)
+                    .fillColor(Color.argb(32, 33, 150, 243));
+            circle = mMap.addCircle(circleOptions);
+            LatLng pista2 = new LatLng(latP2, lngP2);
+            latP1 = latP2;
+            lngP1 = lngP2;
+            marcaTelepizza.remove();
+            marcaTelepizza = mMap.addMarker(new MarkerOptions().position(pista2).title("Segunda Pista").snippet("Encuentra el Código QR").visible(false));
+            Toast.makeText(this, "Vuelve a pulsar para actualizar la distancia", Toast.LENGTH_SHORT).show();
+            result = "";
+        }
+        if (result.equals("SegundaPista")) {
+            double latCi2=42.236488;
+            double lngCi2=-8.71318;
+            circle.setVisible(false);
+            LatLng center = new LatLng(latCi2, lngCi2);
+            int radius = 100;
+            CircleOptions circleOptions = new CircleOptions()
+                    .center(center)
+                    .radius(radius)
+                    .strokeColor(Color.parseColor("#0D47A1"))
+                    .strokeWidth(4)
+                    .fillColor(Color.argb(32, 33, 150, 243));
+            // Añadir círculo 3
+            circle = mMap.addCircle(circleOptions);
+            LatLng tesoro = new LatLng(latP, lngP);
+            latP1 = latP2;
+            lngP1 = lngP2;
+            marcaTelepizza.remove();
+            marcaTelepizza = mMap.addMarker(new MarkerOptions().position(tesoro).title("Tesoro").snippet("Encuentra el Tesoro").visible(false));
+            Toast.makeText(this, "Vuelve a pulsar para actualizar la distancia", Toast.LENGTH_SHORT).show();
+            result = "";
+        }
     }
+
 
     public void calcularDistancia() {
 
@@ -195,6 +229,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         float dist = earthRadius * c;
         float distMet = dist * 1000;
         distancia = String.valueOf(distMet);
+
+        if(distMet<=20){
+            marcaTelepizza.setVisible(true);
+        }else {
+            marcaTelepizza.setVisible(false);
+        }
 
 
     }
