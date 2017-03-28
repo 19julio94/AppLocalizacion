@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity__qr"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_codigo_qr"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.example.jp.localizacionapp.MapsActivity">
+    tools:context="com.example.jp.localizacionapp.MapsActivity"
+    android:background="#795548">
 
-    <TextView
-        android:text="Prueba"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvFormat"
-        android:layout_weight="1"
-        />
+    TextView
+    android:text="1. Pulsa el icono para escanear la foto.\n\n2. Para volver al mapa pulsa en nueva pista.\n\n3. da un toque en el mapa para actulaizar a la nueva pista."
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/tvFormat"
+    android:layout_weight="1"
+    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
 
     <ImageButton
         android:layout_width="match_parent"
@@ -23,11 +29,21 @@
         android:id="@+id/imageButton"
         android:layout_weight="1"
         tools:background="@color/cast_expanded_controller_text_color" />
+
+    <Button
+        android:text="Ver Nueva Pista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        android:layout_weight="1"
+        android:background="#E0E0E0" />
+
     <TextView
         android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvResult"
         android:layout_weight="1" />
-
 </LinearLayout>
+
+

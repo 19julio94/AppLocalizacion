@@ -52,9 +52,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static float latP2 = (float) 42.23793;
     public static float lngP2 = (float) -8.712401;
     public static Marker marcaTelepizza;
-    public static double latP=42.236323; //latitud del tesoro
-    public static double lngP =-8.712158; //longitud del tesoro
-
+    public static double latP = 42.236323; //latitud del tesoro
+    public static double lngP = -8.712158; //longitud del tesoro
+    public final static int CODIGO=1;
     int radius = 100;
     LatLng center = new LatLng(latP1, lngP1);
 
@@ -191,8 +191,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             result = "";
         }
         if (result.equals("SegundaPista")) {
-            double latCi2=42.236488;
-            double lngCi2=-8.71318;
+            double latCi2 = 42.236488;
+            double lngCi2 = -8.71318;
             circle.setVisible(false);
             LatLng center = new LatLng(latCi2, lngCi2);
             int radius = 100;
@@ -230,9 +230,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         float distMet = dist * 1000;
         distancia = String.valueOf(distMet);
 
-        if(distMet<=20){
+        if (distMet <= 20) {
             marcaTelepizza.setVisible(true);
-        }else {
+        } else {
             marcaTelepizza.setVisible(false);
         }
 
@@ -309,6 +309,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapLongClick(LatLng latLng) {
 
+        Intent intent=new Intent(this,Activity_QR.class);
+
+        startActivityForResult(intent,CODIGO);
+
+    }
+    public void onActivityResult(int requestCode,int resultCode,Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+
+        if(requestCode == CODIGO){
+            if(resultCode == RESULT_OK){
+                result=data.getStringExtra("pista2");
+
+            }
+        }
     }
 }
 
