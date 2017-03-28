@@ -116,7 +116,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .strokeColor(Color.parseColor("#0D47A1"))
                 .strokeWidth(4)
                 .fillColor(Color.argb(32, 33, 150, 243));
-        // Añadir círculo 1
+        // Anhadimos el circulo 1
         circle = mMap.addCircle(circleOptions);
 
 
@@ -150,6 +150,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
+
+    //La funcion de este metodo es que al pulsar en el mapa hara lo que hemos descrito en el metodo
     public void onMapClick(LatLng latLng) {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -161,6 +163,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+
+        //Asi obtendremos nuestra localizacion
         Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
         updateUI(lastLocation);
         calcularDistancia();
@@ -202,7 +206,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .strokeColor(Color.parseColor("#0D47A1"))
                     .strokeWidth(4)
                     .fillColor(Color.argb(32, 33, 150, 243));
-            // Añadir círculo 3
+            // Anhadido circulo 3
             circle = mMap.addCircle(circleOptions);
             LatLng tesoro = new LatLng(latP, lngP);
             latP1 = latP2;
@@ -214,7 +218,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
+//Calculamos la distancia entre mi posicion y la pista,lo he puesto en float para que no salga un numero excesivamente largo y asi sea mas lejible
     public void calcularDistancia() {
 
 
@@ -307,6 +311,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             "Buena suerte suerte.";
 
     @Override
+
+    //metodo que detecta un toque largo en la pantalla y donde llamaremos la activity del QR
     public void onMapLongClick(LatLng latLng) {
 
         Intent intent=new Intent(this,Activity_QR.class);
@@ -314,6 +320,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startActivityForResult(intent,CODIGO);
 
     }
+
+    //metodo para comunicar las activity
     public void onActivityResult(int requestCode,int resultCode,Intent data){
         super.onActivityResult(requestCode,resultCode,data);
 
