@@ -35,33 +35,30 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.Locale;
 
 
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener,
-        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,GoogleMap.OnMapLongClickListener {
+        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, GoogleMap.OnMapLongClickListener {
 
 
     private static final int LOCATION_REQUEST_CODE = 1;
+    public static Circle circle;
     private GoogleMap mMap;
     private GoogleApiClient apiClient;
-    public static String result="";
-    public static String distancia;
-    public static double latpos, lngpos;
-    public static double latTele=42.237020;
-    public static double lngTele=-8.712628;
-    CircleOptions circle;
     private static final String LOGTAG = "android-localizacion";
+    public static String result = "";
+    public static String distancia;
+    public static float latpos, lngpos;
+    public static float latP1 = (float) 42.237020;
+    public static float lngP1 = (float) -8.712628;
+
+
+
     public static Marker marcaTelepizza;
     LatLng telp = new LatLng(42.236954, -8.712717);
     LatLng abn = new LatLng(42.237667, -8.720249);
+    public static double latAbn = 42.237782;
+    public static double lngAbn = -8.720155;
     int radius = 100;
-
-    public static double latAbn=42.237782;
-    public static double lngAbn=-8.720155;
-
-
-
-
-
+    LatLng center = new LatLng(latP1, lngP1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,18 +66,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 
 
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
 
-
         apiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this,this)
+                .enableAutoManage(this, this)
                 .addConnectionCallbacks(this)
                 .addApi(LocationServices.API)
                 .build();
+
         instrucciones();
     }
 
@@ -92,10 +88,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapClickListener(this);
         mMap.setOnMapLongClickListener(this);
 
-        LatLng telepizza = new LatLng(latTele, lngTele);
-        marcaTelepizza = mMap.addMarker(new MarkerOptions().position(telepizza).title("Telepizza").snippet("Marca Telepizza"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(telepizza));
-        marcaTelepizza.setVisible(false);
+        LatLng pistaTelepizza = new LatLng(latP1, lngP1);
+        marcaTelepizza = mMap.addMarker(new MarkerOptions().position(pistaTelepizza).title("Telepizza").snippet("Encuentra el QR y usalo ").visible(false));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(pistaTelepizza));
+
 
 
         // Controles UI
@@ -114,33 +110,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         LOCATION_REQUEST_CODE);
             }
         }
-
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        CircleOptions circuloTelepizza = new CircleOptions()
-                .center(telp)
-                .radius(radius)
-                .strokeColor(Color.parseColor("#0D47A1"))
-                .strokeWidth(4)
-                .fillColor(Color.argb(32, 33, 150, 243));
-        // Añadir círculo Telepizza
-        Circle areaTelepizza = mMap.addCircle(circuloTelepizza);
 
-        CircleOptions circuloAbanca = new CircleOptions()
-                .center(abn)
+
+        CircleOptions circleOptions = new CircleOptions()
+                .center(center)
                 .radius(radius)
                 .strokeColor(Color.parseColor("#0D47A1"))
                 .strokeWidth(4)
                 .fillColor(Color.argb(32, 33, 150, 243));
-        // Añadir círculo Abanca
-        Circle areaAbanca = mMap.addCircle(circuloAbanca);
+        // Añadir círculo 1
+        circle = mMap.addCircle(circleOptions);
+
+
+
+
+
 
 
 
 
 
     }
-
-
 
 
     @Override
@@ -186,42 +177,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         calcularDistancia();
 
 
-        Toast.makeText(this, distancia+" metros ", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, distancia + " metros ", Toast.LENGTH_LONG).show();
 
     }
+
     public void calcularDistancia() {
 
 
         float earthRadius = (float) 6378.137;
 
-        float dLat = (float) Math.toRadians(latpos - latTele);
-        float dLng = (float) Math.toRadians(lngpos - lngTele);
+        float dLat = (float) Math.toRadians(latpos - latP1);
+        float dLng = (float) Math.toRadians(lngpos - lngP1);
         float a = (float) (Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                        Math.cos(Math.toRadians(latTele)) * Math.cos(Math.toRadians(latpos)) *
-                                Math.sin(dLng / 2) * Math.sin(dLng / 2));
+                Math.cos(Math.toRadians(latP1)) * Math.cos(Math.toRadians(latpos)) *
+                        Math.sin(dLng / 2) * Math.sin(dLng / 2));
         float c = (float) (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
         float dist = earthRadius * c;
         float distMet = dist * 1000;
         distancia = String.valueOf(distMet);
 
 
-
-
-            if (distMet <= 20.00) {
-                marcaTelepizza.setVisible(true);
-            }
-
-            Toast.makeText(this, "Quedan " + distancia + "metros hasta la marca", Toast.LENGTH_SHORT).show();
-
-        }
+    }
 
     private void updateUI(Location loc) {
 
         if (loc != null) {
-            latpos=loc.getLatitude();
-            lngpos=loc.getLongitude();
+            latpos = (float) loc.getLatitude();
+            lngpos = (float) loc.getLongitude();
             //Tosat para saber longitud y latitud de mi posicion
-             //Toast.makeText(this, String.valueOf(lat1)+" "+String.valueOf(lng1), Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, String.valueOf(lat1)+" "+String.valueOf(lng1), Toast.LENGTH_LONG).show();
         } else {
 
             Toast.makeText(this, "Latitud y Longitud desconocidas", Toast.LENGTH_LONG).show();
