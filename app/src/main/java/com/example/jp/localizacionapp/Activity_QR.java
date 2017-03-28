@@ -67,9 +67,9 @@ public class Activity_QR extends AppCompatActivity {
     private void updateUITextViews(String scan_result, String scan_result_format) {
         final TextView tvResult = (TextView)findViewById(R.id.tvResult);
         tvResult.setText(scan_result);
-        //Le pasamos el resultado del QR a la variable pista2 que se la pasara a la activity principal en el metodo oncreate()
+        //El resultado del QR se lo pasamos a la variable pista2 y esta a la ActivityMain
         pista2=scan_result;
-        ////**********/////
+
         Linkify.addLinks(tvResult, Linkify.ALL);
     }
 }
